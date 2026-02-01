@@ -1,0 +1,174 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f5f5f5;
+    color: #513c3c;
+}
+
+/* Navbar */
+.navbar {
+    background: #4e2f2f;
+    color: #ffffff;
+    padding:30px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position : sticky;
+    top : 0;
+    z-index : 1000;
+}
+
+.navbar nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+
+/* Sections */
+section {
+    background: #ffffff;
+    margin: 40px auto;
+    padding: 40px;
+    max-width: 1100px;
+}
+
+/* Hero */
+.hero {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero-text button {
+    padding: 10px 20px;
+    border: none;
+    background: #ddd;
+    cursor: pointer;
+}
+
+/* About */
+.about {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+/* Grid */
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Placeholder (Low Fidelity Box) */
+.placeholder {
+    background: #e0e0e0;
+    height: 150px;
+    position: relative;
+}
+
+.placeholder::before,
+.placeholder::after {
+    content: "";
+    position: absolute;
+    background: #aaa;
+}
+
+.placeholder::before {
+    width: 100%;
+    height: 1px;
+    top: 50%;
+    transform: rotate(45deg);
+}
+
+.placeholder::after {
+    width: 100%;
+    height: 1px;
+    top: 50%;
+    transform: rotate(-45deg);
+}
+
+.placeholder.large {
+    height: 250px;
+}
+
+.placeholder.wide {
+    height: 180px;
+}
+
+/* Location */
+.location-content {
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.location-text {
+    flex: 1;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: #4e2f2f;
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .grid-4 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero, .about, .location-content {
+        flex-direction: column;
+    }
+
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .navbar nav {
+        margin-top: 10px;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
