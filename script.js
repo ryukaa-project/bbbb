@@ -1,68 +1,87 @@
-// Smooth scrolling for navbar links
-document.querySelectorAll('nav a').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-            targetElement.scrollIntoView({
-                behavior: 'smooth'
-            });
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Intersection Observer for Reveal Animations
+    const observerOptions = {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.1 // Trigger when 10% visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('.reveal');
+    revealElements.forEach(el => observer.observe(el));
+
+
+    // Navbar sticky shadow effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('shadow-md');
+        } else {
+            navbar.classList.remove('shadow-md');
         }
     });
-});
 
-// Smooth scrolling for hero button to products section
-document.querySelector('.hero-text button').addEventListener('click', function() {
-    const productsSection = document.getElementById('products');
-    if (productsSection) {
-        productsSection.scrollIntoView({
-            behavior: 'smooth'
+    // Smooth Scrolling for Anchor Links (Fallback/Enhancement for Safari)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Close mobile menu if open
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse.classList.contains('show')) {
+                    const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                    bsCollapse.hide();
+                }
+
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Price Bar Animation Trigger
+    const priceSection = document.querySelector('#price-comparison');
+    if (priceSection) {
+        const priceObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.progress-bar-custom');
+                    progressBars.forEach(bar => {
+                        const width = bar.getAttribute('style'); // Get initial style if needed or just set it
+                        // Reset to 0 then animate
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = '80%'; // Hardcoded for this demo based on HTML
+                        }, 100);
+                    });
+                    priceObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        priceObserver.observe(priceSection);
+    }
+
+    // Seasonal Banner Close
+    const bannerClose = document.querySelector('.banner-close');
+    if (bannerClose) {
+        bannerClose.addEventListener('click', function () {
+            this.closest('.seasonal-banner').style.display = 'none';
         });
     }
-});
 
-// new file: toggles mobile nav open/close
-document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.querySelector('.nav-toggle');
-    const nav = document.querySelector('#primary-nav');
-    if (!toggle || !nav) return;
-
-    toggle.addEventListener('click', function (e) {
-        e.stopPropagation();
-        const opened = nav.classList.toggle('open');
-        toggle.classList.toggle('open', opened);
-        toggle.setAttribute('aria-expanded', opened ? 'true' : 'false');
-    });
-
-    // close menu when a nav link is clicked (mobile)
-    nav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                nav.classList.remove('open');
-                toggle.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-            }
-        });
-    });
-
-    // close on outside click (mobile)
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768) {
-            if (!nav.contains(e.target) && !toggle.contains(e.target)) {
-                nav.classList.remove('open');
-                toggle.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-            }
-        }
-    });
-
-    // ensure closed on resize to desktop
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            nav.classList.remove('open');
-            toggle.classList.remove('open');
-            toggle.setAttribute('aria-expanded', 'false');
-        }
-    });
 });
