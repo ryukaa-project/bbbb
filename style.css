@@ -13,22 +13,79 @@ body {
 .navbar {
     background: #4e2f2f;
     color: #ffffff;
-    padding:30px 40px;
+    padding: 12px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position : sticky;
     top : 0;
     z-index : 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img{
+    width: auto;
+    height: 45px;   
+}
+
+/* Desktop nav */
+.navbar nav {
+    display: flex;
+    gap: 18px;
+    align-items: center;
 }
 
 .navbar nav a {
     color: #ffffff;
     text-decoration: none;
-    margin-right: 20px;
-    font-size: 20px;
+    font-size: 16px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    transition: background .18s ease;
 }
 
+.navbar nav a:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* Hamburger button (hidden on desktop) */
+.nav-toggle {
+    background: transparent;
+    border: none;
+    display: none;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    position: relative;
+    z-index: 1200; /* ensure clickable above nav */
+}
+
+.nav-toggle .bar {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    margin: 4px 0;
+    border-radius: 2px;
+    transition: opacity .12s ease, transform .12s ease;
+}
+
+/* keep as three horizontal lines (no X transform) */
+.nav-toggle.open .bar1,
+.nav-toggle.open .bar2,
+.nav-toggle.open .bar3 {
+    transform: none;
+    opacity: 1;
+}
 
 /* Sections */
 section {
@@ -148,16 +205,50 @@ section {
     .grid-4 {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    /* Show hamburger, hide inline nav by default */
+    .nav-toggle {
+        display: flex;
+    }
+
+    .navbar {
+        padding: 10px 16px;
+    }
+
+    .navbar nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        background: #4e2f2f;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height .25s ease;
+        z-index: 1100;
+    }
+
+    .navbar nav a {
+        padding: 12px 16px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        text-align: center;
+    }
+
+    .navbar nav.open {
+        max-height: 420px; /* cukup untuk beberapa link */
+    }
 }
 
 @media (max-width: 480px) {
     .navbar {
-        flex-direction: column;
+        flex-direction: row;
         text-align: center;
     }
 
     .navbar nav {
-        margin-top: 10px;
+        margin-top: 0;
     }
 
     section {
