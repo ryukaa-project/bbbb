@@ -1,87 +1,116 @@
 document.addEventListener('DOMContentLoaded', () => {
+    'use strict';
 
-    // Intersection Observer for Reveal Animations
-    const observerOptions = {
-        root: null, // viewport
-        rootMargin: '0px',
-        threshold: 0.1 // Trigger when 10% visible
+    // 1. Navbar Scroll Effect
+    const navbar = document.querySelector('.navbar');
+    const handleScroll = () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled', 'shadow-sm');
+        } else {
+            navbar.classList.remove('scrolled', 'shadow-sm');
+        }
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+
+    // 2. Intersection Observer for Reveal Animations
+    const revealOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
+    const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Only animate once
+                revealObserver.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, revealOptions);
 
-    const revealElements = document.querySelectorAll('.reveal');
-    revealElements.forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+    // 3. Dynamic Progress Bar Animation
+    const progressSection = document.querySelector('#price-comparison');
+    if (progressSection) {
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.progress-bar-custom').forEach(bar => {
+                        const targetWidth = bar.getAttribute('data-width') || '0';
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = `${targetWidth}%`;
+                        }, 200);
+                    });
+                    progressObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        progressObserver.observe(progressSection);
+    }
 
-    // Navbar sticky shadow effect
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('shadow-md');
-        } else {
-            navbar.classList.remove('shadow-md');
-        }
-    });
-
-    // Smooth Scrolling for Anchor Links (Fallback/Enhancement for Safari)
+    // 4. Smooth Scrolling & Mobile Menu Auto-close
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
 
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
+                e.preventDefault();
+
                 // Close mobile menu if open
                 const navbarCollapse = document.querySelector('.navbar-collapse');
-                if (navbarCollapse.classList.contains('show')) {
-                    const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse);
                     bsCollapse.hide();
                 }
 
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                // Smooth scroll
+                const navbarHeight = navbar.offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - (navbarHeight - 10);
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
                 });
             }
         });
     });
 
-    // Price Bar Animation Trigger
-    const priceSection = document.querySelector('#price-comparison');
-    if (priceSection) {
-        const priceObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const progressBars = entry.target.querySelectorAll('.progress-bar-custom');
-                    progressBars.forEach(bar => {
-                        const width = bar.getAttribute('style'); // Get initial style if needed or just set it
-                        // Reset to 0 then animate
-                        bar.style.width = '0%';
-                        setTimeout(() => {
-                            bar.style.width = '80%'; // Hardcoded for this demo based on HTML
-                        }, 100);
-                    });
-                    priceObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-        priceObserver.observe(priceSection);
-    }
-
-    // Seasonal Banner Close
+    // 5. Seasonal Banner Close
     const bannerClose = document.querySelector('.banner-close');
     if (bannerClose) {
         bannerClose.addEventListener('click', function () {
-            this.closest('.seasonal-banner').style.display = 'none';
+            const banner = this.closest('.seasonal-banner');
+            if (banner) {
+                banner.style.opacity = '0';
+                banner.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    banner.style.display = 'none';
+                }, 400);
+            }
         });
     }
 
+    // 6. Active Nav Link on Scroll
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 150) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
 });
