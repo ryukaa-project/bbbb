@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
-    // 1. Navbar Scroll Effect
+    // buat navbar scroll
     const navbar = document.querySelector('.navbar');
     const handleScroll = () => {
         if (window.scrollY > 50) {
@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
 
-    // 2. Intersection Observer for Reveal Animations
+    // animasi smooth
     const revealOptions = {
         threshold: 0.15,
         rootMargin: '0px 0px -50px 0px'
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // 3. Dynamic Progress Bar Animation
+    // buat bar animasi halaman price comparison
     const progressSection = document.querySelector('#price-comparison');
     if (progressSection) {
         const progressObserver = new IntersectionObserver((entries) => {
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         progressObserver.observe(progressSection);
     }
 
-    // 4. Smooth Scrolling & Mobile Menu Auto-close
+    // smooth scroll dan mobile menu
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
@@ -60,14 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetElement) {
                 e.preventDefault();
 
-                // Close mobile menu if open
+                // mobile menu close
                 const navbarCollapse = document.querySelector('.navbar-collapse');
                 if (navbarCollapse && navbarCollapse.classList.contains('show')) {
                     const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse);
                     bsCollapse.hide();
                 }
 
-                // Smooth scroll
+                // smooth scroll
                 const navbarHeight = navbar.offsetHeight;
                 const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - (navbarHeight - 10);
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Seasonal Banner Close
+    // baner iklan
     const bannerClose = document.querySelector('.banner-close');
     if (bannerClose) {
         bannerClose.addEventListener('click', function () {
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. Active Nav Link on Scroll
+    // nav link waktu scroll
     const sections = document.querySelectorAll('section[id]');
     window.addEventListener('scroll', () => {
         let current = '';

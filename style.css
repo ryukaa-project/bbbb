@@ -1,4 +1,4 @@
-/* Global Vars & Reset */
+/* global css */
 :root {
     --primary-color: #4e2f2f;
     --primary-light: #6b4c4c;
@@ -20,7 +20,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Typography */
+/* teks */
 h1,
 h2,
 h3,
@@ -58,7 +58,7 @@ h6 {
     padding: 100px 0;
 }
 
-/* ===== NAVBAR ===== */
+/* navbar */
 .navbar {
     background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -125,7 +125,7 @@ h6 {
     outline: none;
 }
 
-/* Mobile Responsive */
+/* hp responsive */
 @media (max-width: 991.98px) {
     .navbar {
         padding: 0.6rem 0;
@@ -161,7 +161,7 @@ h6 {
     }
 }
 
-/* Buttons */
+/* tombol */
 .btn-primary-custom {
     background-color: var(--primary-color);
     color: white;
@@ -176,7 +176,7 @@ h6 {
     box-shadow: 0 5px 15px rgba(78, 47, 47, 0.3);
 }
 
-/* Hero Section */
+/* hero section */
 .hero-section {
     min-height: 100vh;
     padding-top: 100px;
@@ -190,14 +190,13 @@ h6 {
     width: 100%;
 }
 
-/* Common Section Images */
 .section-img {
     height: 400px;
     width: 100%;
     object-fit: cover;
 }
 
-/* Cards & Bento Grid */
+/* card buat grid */
 .service-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -222,7 +221,6 @@ h6 {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Standardized Bento Grid */
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -284,7 +282,7 @@ h6 {
     }
 }
 
-/* Animations */
+/* animasi */
 .transition-hover {
     transition: all 0.3s ease;
 }
@@ -300,7 +298,7 @@ h6 {
     transform: translateY(0);
 }
 
-/* Stagger Delays */
+/* delay animasi */
 .delay-100 {
     transition-delay: 0.1s;
 }
@@ -345,7 +343,7 @@ h6 {
     transition-delay: 0.7s;
 }
 
-/* Utilities */
+
 .object-fit-cover {
     object-fit: cover;
 }
@@ -358,7 +356,7 @@ h6 {
     background: var(--gradient-overlay) !important;
 }
 
-/* Seasonal Banner */
+/* baner iklan */
 .seasonal-banner {
     background: radial-gradient(circle at top right, #fbf7f0, #f5f5f5);
     border-left: 5px solid var(--primary-color);
@@ -378,7 +376,7 @@ h6 {
     font-weight: bold;
 }
 
-/* Menu Grid */
+/* grid buat menu */
 .menu-card {
     background: white;
     border-radius: 16px;
@@ -400,7 +398,7 @@ h6 {
     object-fit: cover;
 }
 
-/* Price Bar Animation */
+/* bar animasi harga */
 .progress-height {
     height: 25px;
     border-radius: 12px;
@@ -411,7 +409,7 @@ h6 {
     transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Testimonials / Masonry */
+/* testimoni */
 .testimonial-img {
     height: 200px;
     width: 100%;
@@ -424,7 +422,7 @@ h6 {
     object-fit: cover;
 }
 
-/* Developer Card */
+/* card developer */
 .dev-card {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -528,7 +526,6 @@ h6 {
     margin: 0 2px;
 }
 
-/* Horizontal Layout Helpers */
 .dev-img-wrapper-sm {
     width: 60px;
     height: 60px;
@@ -582,7 +579,6 @@ h6 {
     background-color: #0077b5;
 }
 
-/* Horizontal Card Styles */
 .dev-card-horizontal {
     display: flex;
     align-items: center;
@@ -622,7 +618,7 @@ h6 {
     }
 }
 
-/* Map */
+/* buat map */
 .map-iframe {
     border: 0;
     border-radius: 30px;
@@ -630,7 +626,7 @@ h6 {
     height: 450px;
 }
 
-/* Shimmer Loading Effect */
+/* buat loading */
 .shimmer {
     background: var(--shimmer-bg);
     background-size: 200% 100%;
@@ -647,7 +643,7 @@ h6 {
     }
 }
 
-/* Responsive Fixes */
+/* responsif */
 @media (max-width: 991px) {
     .section-padding {
         padding: 60px 0;
